@@ -21,7 +21,7 @@ function amd(req, callback) {
         paths[i] = depPath;
         js = js.substr(0, dep.offset) + depPath + js.substr(dep.offset + dep.name.length);
       }
-      var js = "define(" + JSON.stringify(req.path) + ", " + 
+      js = "define(" + JSON.stringify(req.path) + ", " + 
           JSON.stringify(paths) + ", function (module, exports) {\n" +
           js + "\n});\n";
       callback(null, js);
