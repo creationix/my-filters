@@ -1,6 +1,6 @@
-var mine = require('./lib/mine.js');
-var pathJoin = require('./lib/pathjoin.js');
-var sha1 = require('./lib/sha1.js');
+var mine = require('mine');
+var pathJoin = require('pathjoin');
+var sha1 = require('sha1');
 
 module.exports = cjs;
 
