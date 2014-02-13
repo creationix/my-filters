@@ -1,10 +1,10 @@
 {
   "author": "Tim Caswell <tim@creationix.com>",
   "dependencies": {
-    "pathjoin": "git@github.com:creationix/pathjoin.git",
-    "parallel": "git@github.com:creationix/parallel-continuable.git",
-    "mine": "git@github.com:creationix/mine.git",
-    "sha1": "git@github.com:creationix/git-sha1.git",
-    "binary": "git@github.com:creationix/binary-browser.git"
+    "pathjoin": "git://github.com/creationix/pathjoin.git",
+    "parallel": "git://github.com/creationix/parallel-continuable.git",
+    "mine": "git://github.com/creationix/mine.git",
+    "sha1": "git://github.com/creationix/git-sha1.git",
+    "binary": "git://github.com/creationix/binary-browser.git"
   }
 }
