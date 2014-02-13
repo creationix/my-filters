@@ -7,7 +7,7 @@ function amd(req, callback) {
   var etag = req.target.etag;
   etag = etag.substr(0, etag.length - 1) + '-amd"';
   return callback(null, {etag: etag, fetch: fetch});
-  
+
   function fetch(callback) {
     req.target.fetch(function (err, js) {
       if (err) return callback(err);
@@ -21,7 +21,7 @@ function amd(req, callback) {
         paths[i] = depPath;
         js = js.substr(0, dep.offset) + depPath + js.substr(dep.offset + dep.name.length);
       }
-      js = "define(" + JSON.stringify(req.path) + ", " + 
+      js = "define(" + JSON.stringify(req.path) + ", " +
           JSON.stringify(paths) + ", function (module, exports) {\n" +
           js + "\n});\n";
       callback(null, js);
