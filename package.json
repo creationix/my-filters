@@ -7,9 +7,9 @@
   "author": "Tim Caswell <tim@creationix.com>",
   "dependencies": {
     "pathjoin": "git://github.com/creationix/pathjoin.git",
-    "parallel": "git://github.com/creationix/parallel-continuable.git",
+    "carallel": "git://github.com/creationix/carallel.git",
     "mine": "git://github.com/creationix/mine.git",
     "git-sha1": "git://github.com/creationix/git-sha1.git",
-    "binary": "git://github.com/creationix/binary-browser.git"
+    "bodec": "git://github.com/creationix/bodec.git"
   }
 }

@@ -1,6 +1,6 @@
 var mine = require('mine');
 var pathJoin = require('pathjoin');
-var sha1 = require('sha1');
+var sha1 = require('git-sha1');
 
 module.exports = cjs;
 

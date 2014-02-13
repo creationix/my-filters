@@ -1,6 +1,6 @@
-var sha1 = require('sha1');
+var sha1 = require('git-sha1');
 var pathJoin = require('pathjoin');
-var parallel = require('parallel');
+var parallel = require('carallel');
 
 var mime = "text/cache-manifest";
 

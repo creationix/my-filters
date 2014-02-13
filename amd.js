@@ -2,7 +2,7 @@
 
 var mine = require("mine");
 var pathJoin = require("pathjoin");
-var binary = require('binary');
+var binary = require('bodec');
 module.exports = amd;
 
 function amd(servePath, req, callback) {
