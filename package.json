@@ -1,5 +1,9 @@
 {
   "name": "filters",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/creationix/my-filters.git"
+  },
   "author": "Tim Caswell <tim@creationix.com>",
   "dependencies": {
     "pathjoin": "git://github.com/creationix/pathjoin.git",
