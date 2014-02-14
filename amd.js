@@ -43,7 +43,7 @@ function amd(servePath, req, callback) {
       js = "define(" + JSON.stringify(pathJoin(base, name)) + ", " +
           JSON.stringify(paths) + ", function (module, exports) {\n" +
           js + "\n});\n";
-      callback(null, js);
+      callback(null, binary.fromUnicode(js));
     });
   }
 }
