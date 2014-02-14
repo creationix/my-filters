@@ -6,7 +6,17 @@ var binary = require('bodec');
 module.exports = cjs;
 
 function cjs(servePath, req, callback) {
-  var etag = req.current + "-" + req.hash + "-" + req.target.etag;
+  var prefix = req.args[0];
+  var base = pathJoin(req.path, "..");
+  if (prefix) {
+    prefix = pathJoin(base, prefix);
+    if (prefix === base) base = "";
+    else if (base.substring(0, prefix.length + 1) === prefix +"/") {
+      base = base.substring(prefix.length + 1);
+    }
+  }
+
+  var etag = req.root + "-" + req.hash + "-" + req.target.etag;
   var modules = {};  // compiled modules
   var packagePaths = {}; // key is base + name , value is full path
   var aliases = {}; // path aliases from the "browser" directive in package.json

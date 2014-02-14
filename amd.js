@@ -17,12 +17,7 @@ function amd(servePath, req, callback) {
     }
   }
 
-  if (req.args[1]) {
-    base = pathJoin(base, req.args[1]);
-  }
-
   var name = req.path.substring(req.path.lastIndexOf("/") + 1);
-
 
   return callback(null, {etag: req.hash + "-" + req.target.etag, fetch: fetch});
 
