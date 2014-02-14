@@ -1,20 +1,10 @@
 var mine = require('mine');
 var pathJoin = require('pathjoin');
-var sha1 = require('git-sha1');
 var binary = require('bodec');
 
 module.exports = cjs;
 
 function cjs(servePath, req, callback) {
-  var prefix = req.args[0];
-  var base = pathJoin(req.path, "..");
-  if (prefix) {
-    prefix = pathJoin(base, prefix);
-    if (prefix === base) base = "";
-    else if (base.substring(0, prefix.length + 1) === prefix +"/") {
-      base = base.substring(prefix.length + 1);
-    }
-  }
 
   var etag = req.current + "-" + req.hash + "-" + req.target.etag;
   var modules = {};  // compiled modules
