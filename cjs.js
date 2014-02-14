@@ -1,11 +1,12 @@
 var mine = require('mine');
 var pathJoin = require('pathjoin');
 var sha1 = require('git-sha1');
+var binary = require('bodec');
 
 module.exports = cjs;
 
-function cjs(req, callback) {
-  var etag = 'W/"' + sha1(req.root + ":" + req.target.etag) + '"';
+function cjs(servePath, req, callback) {
+  var etag = req.current + "-" + req.hash + "-" + req.target.etag;
   var modules = {};  // compiled modules
   var packagePaths = {}; // key is base + name , value is full path
   var aliases = {}; // path aliases from the "browser" directive in package.json
@@ -17,16 +18,16 @@ function cjs(req, callback) {
 
     function onInput(err, input) {
       if (err) return callback(err);
-      input = "" + input;
-      processJs(req.target.path, input, function (err) {
+      input = binary.toUnicode(input);
+      processJs(req.targetPath, input, function (err) {
         if (err) return callback(err);
         var out;
         try { out = gen({
-          initial: req.target.path,
+          initial: req.targetPath,
           modules: modules
         }, true) + "\n"; }
         catch (err) { return callback(err); }
-        callback(null, out);
+        callback(null, binary.fromUnicode(out));
       });
     }
 
@@ -64,6 +65,7 @@ function cjs(req, callback) {
     }
 
     function resolvePath(path, callback) {
+      if (!(/\.[^\/]+$/.test(path))) path += ".js";
       if (path in aliases) path = aliases[path];
       if (path in modules) return callback(null, path);
       if (/\.js$/.test(path)) {
@@ -108,16 +110,16 @@ function cjs(req, callback) {
 
     }
 
-    function loader(path, binary, callback) {
-      req.repo.servePath(req.root, path, null, function (err, res) {
+    function loader(path, asBinary, callback) {
+      servePath(path, null, function (err, res) {
         if (!res) return callback(err);
         res.fetch(function (err, data) {
           if (err) return callback(err);
-          if (Buffer.isBuffer(data)) {
-            if (!binary) data = data.toString();
+          if (binary.isBinary(data)) {
+            if (!asBinary) data = binary.toUnicode(data);
           }
           else {
-            if (binary) data = new Buffer(data);
+            if (asBinary) data = binary.fromUnicode(data);
           }
           callback(null, data);
         });
