@@ -16,7 +16,7 @@ function cjs(servePath, req, callback) {
     }
   }
 
-  var etag = req.root + "-" + req.hash + "-" + req.target.etag;
+  var etag = req.current + "-" + req.hash + "-" + req.target.etag;
   var modules = {};  // compiled modules
   var packagePaths = {}; // key is base + name , value is full path
   var aliases = {}; // path aliases from the "browser" directive in package.json
