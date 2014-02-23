@@ -36,7 +36,7 @@ function amd(servePath, req, callback) {
         js = js.substr(0, dep.offset) + depPath + js.substr(dep.offset + dep.name.length);
       }
       js = "define(" + JSON.stringify(pathJoin(base, name)) + ", " +
-          JSON.stringify(paths) + ", function (module, exports) {\n" +
+          JSON.stringify(paths) + ", function (module, exports) { " +
           js + "\n});\n";
       callback(null, binary.fromUnicode(js));
     });
