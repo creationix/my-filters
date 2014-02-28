@@ -12,7 +12,13 @@ function amdTree(servePath, req, callback) {
   var path = pathJoin(req.paths.root, req.input, req.paths.local);
   servePath(path, function (err, result) {
     if (err) return callback(err);
-    return callback(null, {mode:result.mode,hash:result.hash,fetch:fetch});
+    if (!shouldHandle(req.paths.rule), result) return callback();
+    return callback(null, {
+      mode: result.mode,
+      hash: result.hash + "-amd",
+      root: result.root,
+      fetch : fetch
+    });
 
     function fetch(callback) {
       result.fetch(function (err, value) {
@@ -24,8 +30,7 @@ function amdTree(servePath, req, callback) {
           var tree = {};
           Object.keys(value).forEach(function (key) {
             var entry = value[key];
-            if ((/\.js$/i.test(key) && modes.isFile(entry.mode)) ||
-                entry.mode === modes.tree) {
+            if (shouldHandle(key, entry)) {
               entry.hash += "-amd";
               tree[key] = entry;
             }
@@ -36,6 +41,11 @@ function amdTree(servePath, req, callback) {
       });
     }
   });
+
+  function shouldHandle(path, entry) {
+    return entry && (entry.mode === modes.tree ||
+           modes.isFile(entry.mode) && /\.js$/i.test(path));
+  }
 
   function compile(path, blob, callback) {
     var prefix = pathJoin(req.paths.rule, "..", req.base || ".");
