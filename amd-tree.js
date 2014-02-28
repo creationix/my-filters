@@ -12,10 +12,10 @@ function amdTree(servePath, req, callback) {
   var path = pathJoin(req.paths.root, req.input, req.paths.local);
   servePath(path, function (err, result) {
     if (err) return callback(err);
-    if (!shouldHandle(req.paths.rule), result) return callback();
+    if (!shouldHandle(path, result)) return callback();
     return callback(null, {
       mode: result.mode,
-      hash: result.hash + "-amd",
+      hash: result.hash + "-" + req.codeHash,
       root: result.root,
       fetch : fetch
     });
@@ -31,7 +31,7 @@ function amdTree(servePath, req, callback) {
           Object.keys(value).forEach(function (key) {
             var entry = value[key];
             if (shouldHandle(key, entry)) {
-              entry.hash += "-amd";
+              entry.hash += "-" + req.codeHash;
               tree[key] = entry;
             }
           });

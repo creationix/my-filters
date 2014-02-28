@@ -3,6 +3,7 @@
 var sha1 = require('git-sha1');
 var pathJoin = require('pathjoin');
 var parallel = require('carallel');
+var modes = require('js-git/lib/modes');
 
 var mime = "text/cache-manifest";
 
@@ -37,9 +38,17 @@ function appcache(servePath, req, callback) {
       }).join("\n") + "\n";
     }
     var hash = sha1(manifest);
-    callback(null, {hash: hash, mime: mime, fetch:function (callback) {
+    callback(null, {
+      mode: modes.file,
+      hash: hash,
+      root: req.paths.root,
+      mime: mime,
+      fetch: fetch
+    });
+
+    function fetch(callback) {
       callback(null, manifest);
-    }});
+    }
   });
 
 }
