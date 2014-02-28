@@ -24,7 +24,8 @@ function amdTree(servePath, req, callback) {
           var tree = {};
           Object.keys(value).forEach(function (key) {
             var entry = value[key];
-            if (/\.js/i.test(key) && modes.isFile(entry.mode)) {
+            if ((/\.js$/i.test(key) && modes.isFile(entry.mode)) ||
+                entry.mode === modes.tree) {
               entry.hash += "-amd";
               tree[key] = entry;
             }
