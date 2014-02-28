@@ -38,12 +38,13 @@ function amdTree(servePath, req, callback) {
   });
 
   function compile(path, blob, callback) {
-    var prefix = pathJoin(req.paths.root, req.input, req.base || ".");
+    var prefix = pathJoin(req.paths.rule, "..", req.base || ".");
     var js = binary.toUnicode(blob);
     var deps = mine(js);
     var length = deps.length;
     var paths = new Array(length);
-    var localPath = prefix ? path.substring(prefix.length + 1) : path;
+    var full = req.paths.full;
+    var localPath = prefix ? full.substring(prefix.length + 1) : full;
     var base = localPath.substring(0, localPath.lastIndexOf("/"));
 
     for (var i = length - 1; i >= 0; i--) {
