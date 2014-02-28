@@ -36,7 +36,6 @@ function appcache(servePath, req, callback) {
         return key + " " + req.fallback[key];
       }).join("\n") + "\n";
     }
-    // TODO: output data from "fallback" and "network" in the rule
     var hash = sha1(manifest);
     callback(null, {hash: hash, mime: mime, fetch:function (callback) {
       callback(null, manifest);
