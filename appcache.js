@@ -2,8 +2,9 @@
 
 var sha1 = require('git-sha1');
 var pathJoin = require('pathjoin');
-var parallel = require('carallel');
+var carallel = require('carallel');
 var modes = require('js-git/lib/modes');
+var bodec = require('bodec');
 
 var mime = "text/cache-manifest";
 
@@ -17,7 +18,7 @@ function appcache(servePath, req, callback) {
     };
   });
 
-  parallel(actions, function (err, entries) {
+  carallel(actions, function (err, entries) {
     if (err) return callback(err);
     var manifest = "CACHE MANIFEST\n";
     entries.forEach(function(entry, i) {
@@ -41,13 +42,12 @@ function appcache(servePath, req, callback) {
     callback(null, {
       mode: modes.file,
       hash: hash,
-      root: req.paths.root,
       mime: mime,
       fetch: fetch
     });
 
     function fetch(callback) {
-      callback(null, manifest);
+      callback(null, bodec.fromUnicode(manifest));
     }
   });
 
