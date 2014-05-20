@@ -12,14 +12,6 @@ module.exports = jsCompiler;
 
 function jsCompiler(servePath, req, callback) {
 
-// "paths":{
-//   "full":"tedit-app/build/web/src.rule",
-//   "local":"",
-//   "rule":"tedit-app/build/web/src.rule",
-//   "root":"tedit-app"
-// },
-// "codeHash":"f7e6bdc26e90a6ae5dde7a312dcd8350494de9f0"
-
   if (req.paths.local) {
 
     var parts = req.paths.local.split("/").filter(Boolean);
@@ -72,9 +64,7 @@ function jsCompiler(servePath, req, callback) {
       var tree = {};
 
       entries.forEach(function (entry) {
-        var name = entry.mode === modes.tree ? entry.name :
-          entry.name + ".js";
-        tree[name] = {
+        tree[entry.name] = {
           mode: entry.mode,
           hash: entry.hash + "-" + req.codeHash,
         };
