@@ -20,16 +20,15 @@ function jsCompiler(servePath, req, callback) {
 // },
 // "codeHash":"f7e6bdc26e90a6ae5dde7a312dcd8350494de9f0"
 
-  console.log(JSON.stringify(req.paths, null, 1));
-
   if (req.paths.local) {
 
     var parts = req.paths.local.split("/").filter(Boolean);
     var name = parts.shift();
     var mapping = req.mappings[name];
     if (!mapping) return callback();
-    var path = fullPath(mapping);
-    loadItem(path, name, parts, callback);
+    parts.unshift(fullPath(mapping));
+    var path = parts.join("/");
+    loadItem(path, req.paths.local, callback);
   }
   else {
     loadRoot(callback);
@@ -84,11 +83,11 @@ function jsCompiler(servePath, req, callback) {
     }
   }
 
-  function loadItem(realPath, path, parts, callback) {
+  function loadItem(realPath, path, callback) {
 
     var result;
     servePath(realPath, function (err, entry) {
-      if (err) return callback(err);
+      if (!entry) return callback(err);
       result = entry;
       callback(null, {
         mode: result.mode,
