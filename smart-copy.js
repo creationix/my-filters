@@ -1,5 +1,6 @@
 var pathJoin = require('pathjoin');
 var modes = require('js-git/lib/modes');
+var sha1 = require('git-sha1');
 
 module.exports = smartCopy;
 
@@ -22,7 +23,7 @@ function smartCopy(servePath, req, callback) {
     if (!result || !result.hash) return callback(err);
     callback(null, {
       mode: result.mode,
-      hash: result.hash + "-" + req.ruleHash + "-" + req.codeHash,
+      hash: sha1(result.hash + "-" + req.ruleHash + "-" + req.codeHash),
       root: result.root,
       fetch : modes.isFile(result.mode) ? result.fetch : fetchTree
     });
