@@ -81,7 +81,7 @@ function jsCompiler(servePath, req, callback) {
       result = entry;
       callback(null, {
         mode: result.mode,
-        hash: result.hash + "-" + req.codeHash,
+        hash: result.hash + "-" + req.ruleHash + "-" + req.codeHash,
         root: result.root,
         fetch : fetch
       });
